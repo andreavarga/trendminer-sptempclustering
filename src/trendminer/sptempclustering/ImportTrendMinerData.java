@@ -351,19 +351,19 @@ public class ImportTrendMinerData {
             }
 
 
-            ///Reading --- USERS ---
-            String sUsers = sMainDir + "users";
-            System.out.println("Reading " + sUsers);
-            BufferedReader fUsers = new BufferedReader(new FileReader(new File(sUsers)));
+            ///Reading --- Cities ---
+            String sCities = sMainDir + "cities";
+            System.out.println("Reading " + sCities);
+            BufferedReader fCities = new BufferedReader(new FileReader(new File(sCities)));
             String sCountry = "";
-            while ((sLine = fUsers.readLine()) != null) {
+            while ((sLine = fCities.readLine()) != null) {
                 arrWords = sLine.split(" ");
                 alphCity.lookupIndex(arrWords[1], true);
             }
 
             System.out.println("Loaded");
             System.out.println("alphCity.size():" + alphCity.size());
-            fUsers.close();
+            fCities.close();
 
             /// Reading --- DATES ---
             String sDates = sMainDir + "dates";

@@ -33,5 +33,5 @@ A set of required data files (in trendminer format) are stored in the "sample-da
 
 *sample-data/sora_vs: stores the data according to indexed vocabulary (from "sample-data/dictionary"), the indexed dates (from "/sample-data/dates"), indexed cities (from "/sample-data/cities"), in the format:
 
- date_id[SPACE]user_id[SPACE]token_id[TAB]frequency
+ date_id[SPACE]city_id[SPACE]token_id[TAB]frequency
   
