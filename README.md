@@ -39,20 +39,20 @@ Several setting are available for importing the data for clustering:
 
 a) import the data using monthly indicator features:
 
-java -Xmx12G -jar trendminer-sptempclustering.jar --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useMonthlyIndicatorFeatures true --mainDir [YOURDATADIR]
+java -Xmx6G -jar trendminer-sptempclustering.jar --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useMonthlyIndicatorFeatures true --mainDir [YOURDATADIR]
 
 b) import the data using temporal smoothing features, sigma=30:
 
-java -Xmx12G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --mainDir [YOURDATADIR]
+java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --mainDir [YOURDATADIR]
 
 c) import the data using temporal smoothing features (sigma=30), and city indicator features:
 
-java -Xmx12G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCityFeatures true --mainDir [YOURDATADIR]
+java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCityFeatures true --mainDir [YOURDATADIR]
 
 d) import the data using temporal smoothing features (sigma=30), and country indicator features:
 
-java -Xmx12G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true --mainDir [YOURDATADIR]
+java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true --mainDir [YOURDATADIR]
 
 e) import the data using temporal smoothing features (sigma=30), and country indicator features, and regional smooring feature sigma_GEO=2:
 
-java -Xmx12G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true  --geokernel true --sigma_GEO 2 --mainDir [YOURDATADIR]
+java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true  --geokernel true --sigma_GEO 2 --mainDir [YOURDATADIR]
