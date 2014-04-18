@@ -1,13 +1,13 @@
 trendminer-sptempclustering
 ===========================
 
-Spatio-temporal clustering methods developed as part of the D3.3.1 deliverable of the Trendminer FP7 project (http://www.trendminer-project.eu)
+Spatio-temporal clustering methods developed as part of the D3.3.1 deliverable of the [Trendminer FP7 project] (http://www.trendminer-project.eu)
 
-Prerequisites
+##### Prerequisites
 
 *Java v1.6+
 
-*mallet-2.0.7+ (http://mallet.cs.umass.edu/download.php)
+*[mallet v2.0.7+](http://mallet.cs.umass.edu/download.php)
 
 This application implements three main functionalities:
 
