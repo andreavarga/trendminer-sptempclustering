@@ -58,3 +58,9 @@ java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --en
 e) import the data using temporal smoothing features (sigma=30), and country indicator features, and regional smooring feature sigma_GEO=2:
 
 java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true  --geokernel true --sigma_GEO 2 --mainDir [YOURDATADIR]
+
+##### 2) Splitting the data into training and test set
+===========================
+
+java -Xmx6G -jar trendminer-sptempclustering.jar --instancesMalletFile [YOURMALLETINSTANCE] --trainingPortion 0.7
+
