@@ -61,6 +61,7 @@ java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --en
 
 ##### 2) Splitting the data into training and test set
 ===========================
+Having the instances created by one of the options described in 1), the next is to split the instances into a training and test datasets:
 
 java -Xmx6G -jar trendminer-sptempclustering.jar --instancesMalletFile [YOURMALLETINSTANCE] --trainingPortion 0.7
 
