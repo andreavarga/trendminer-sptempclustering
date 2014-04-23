@@ -75,5 +75,5 @@ a) by specifying the path to the train (trainInstanceList) and test (testInstanc
 java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100
 
 b) by specifying the number of words to be displayed for each topic (topWords) too
-java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100 --topWords 10
 
+java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100 --topWords 10
