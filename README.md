@@ -70,10 +70,10 @@ java -Xmx6G -jar trendminer-sptempclustering.jar --instancesMalletFile [YOURMALL
 
 Once the train and test instances have been created as described in 2), the spatio-temporal clustering model can be executed as follows:
 
-a) java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100
+a) by specifying the path to the train (trainInstanceList) and test (testInstanceList) files, output directory (outputFolder) and setting the number of topics to be learned (nrTopics)
 
-or
+java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100
 
-b) java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100 --topWords 10
+b) by specifying the number of words to be displayed for each topic (topWords) too
+java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100 --topWords 10
 
-by setting the number of words to be displayed for each topic
