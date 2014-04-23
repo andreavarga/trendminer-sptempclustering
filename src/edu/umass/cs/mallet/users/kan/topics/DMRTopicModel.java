@@ -28,11 +28,13 @@ import cc.mallet.types.FeatureCounter;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
+import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.Randoms;
 
 
 public class DMRTopicModel extends ParallelTopicModel {
+    public static final String CLASSPATH_SEPARATOR = System.getProperty("os.name").contains("indows") ? "\\" : "/"; 
     
     private static final long serialVersionUID = 1;
     MaxEnt dmrParameters;
@@ -238,9 +240,34 @@ public class DMRTopicModel extends ParallelTopicModel {
         }
     }
 
-    public void writeParameters_Andrea(File parameterFile) throws IOException {
+    public void writeParameters_TrendMinerFormat(File parameterFile) throws IOException {
         if (dmrParameters != null) {
-//            dmrParameters.print_SeparateFiles_Andrea(parameterFile.getParent().toString());
+                String sMainDir  = parameterFile.toString();
+                
+		Alphabet dict = dmrParameters.getAlphabet();
+		LabelAlphabet labelDict = dmrParameters.getLabelAlphabet();
+                double[] parameters = dmrParameters.getParameters();
+                int defaultFeatureIndexTmp = dmrParameters.getDefaultFeatureIndex();
+		int numFeatures = dict.size() + 1;
+		int numLabels = labelDict.size();
+
+		for (int li = 0; li < numLabels; li++) {
+                    try {
+                        PrintStream out = new PrintStream(sMainDir + CLASSPATH_SEPARATOR +
+                                "topic_" + labelDict.lookupObject(li) + ".txt");
+                                
+                        out.println("FEATURES FOR CLASS " + labelDict.lookupObject(li));
+                        out.println(" <default> " + parameters[li * numFeatures + defaultFeatureIndexTmp]);
+                        for (int i = 0; i < defaultFeatureIndexTmp; i++) {
+                            Object name = dict.lookupObject(i);
+                            double weight = parameters[li * numFeatures + i];
+                            out.println(name + "," + weight);
+                        }
+                        out.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
         }
     }
 

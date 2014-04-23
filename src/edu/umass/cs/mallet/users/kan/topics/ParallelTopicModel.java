@@ -595,7 +595,7 @@ public class ParallelTopicModel implements Serializable {
             if (printLogLikelihood) {
                 logger.info("<" + iteration + "> LL/token: " + formatter.format(modelLogLikelihood() / totalTokens));
                 if (fResults != null) {
-                    fResults.println(iteration + "," + formatter.format(modelLogLikelihood() / totalTokens));
+//                    fResults.println(iteration + "," + formatter.format(modelLogLikelihood() / totalTokens));
                 }
             }
             else {
