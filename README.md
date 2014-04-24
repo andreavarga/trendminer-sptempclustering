@@ -68,7 +68,7 @@ java -Xmx6G -jar trendminer-sptempclustering.jar --instancesMalletFile [YOURMALL
 ##### 3) Spatio-temporal clustering
 ===========================
 
-Once the train and test instances have been created as described in 2), the spatio-temporal clustering model can be executed as follows:
+Once the train and test instances have been created as described in 2), the spatio-temporal clustering model can be executed by setting the following parameters:
 
 a) by specifying the path to the train (trainInstanceList) and test (testInstanceList) files, output directory (outputFolder) and setting the number of topics to be learned (nrTopics)
 
@@ -77,3 +77,9 @@ java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLET
 b) by specifying the number of words to be displayed for each topic (topWords) too
 
 java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100 --topWords 10
+
+##### Reference:
+===========================
+
+Preotiuc-Pietro, D., Samangooei, S., Varga, A., Gelling, D., Cohn, T., Gibbins, N. and Niranjan, M., 2014. D3.3.1 Tools for Mining Non-stationary Data - Clustering models for discovery of regional and
+demographic variation. Public Deliverable for Trendminer Project
