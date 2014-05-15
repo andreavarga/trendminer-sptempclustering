@@ -1,85 +1,78 @@
-trendminer-sptempclustering
-===========================
+# Trendminer Spatio-temporal clustering
 
-Spatio-temporal clustering methods developed as part of the D3.3.1 deliverable of the [Trendminer FP7 project] (http://www.trendminer-project.eu)
+Spatio-temporal clustering methods developed as part of the [Deliverable 3.3.1](http://www.trendminer-project.eu/images/d3.3.1.pdf)  of the [Trendminer FP7 project] (http://www.trendminer-project.eu)
 
-##### Prerequisites
+## Prerequisites
 
--Java v1.6+
-
--[mallet v2.0.7+](http://mallet.cs.umass.edu/download.php)
++ Java v1.6+
++ [Mallet v2.0.7+](http://mallet.cs.umass.edu/download.php)
 
 This application implements three main functionalities:
 
-1) transformation of the data from trendminer format to mallet format
+1. transformation of the data from the Trendminer format to Mallet format
+2. creation of train and test instance files
+3. execution of spatio-temporal clustering using the [Dirichlet-multinomial regression model (DMR)](http://arxiv.org/ftp/arxiv/papers/1206/1206.3278.pdf)
 
-2) creation of train and test instance files
+## 1) Data tansformation
 
-3) execution of spatio-temporal clustering
+Transforms data from the Trendminer format to the Mallet format. The data is in a folder containing the following files:
+
++ dictionary: the dictionary used in the format 'word\_id word', one word/line, starts with 0
++ dates: the map to the actual calendar days in the format 'day\_id YYYY-MM-DD', one date/line, starts with 0
++ cities: the map to the city names in the format 'city\_id city', one city/line, starts with 0
++ GEO: the map with details of each city in the format 'city\_id city latitude longitude country', one city/line, starts with 0
++ sora\_vs: the data transformed in the following format 'word\_id day\_id city\_id[TAB]frequency', one word/line, representing the frequency of word\_id on day\_id and in city\_id
+
+Several setups are available for transforming the data for clustering, based on the methods decribed in [D3.3.1](http://www.trendminer-project.eu/images/d3.3.1.pdf):
+
+1) Monthly indicator features (Mid):
+
+	java -Xmx6G -jar dist/trendminer-sptempclustering-importer.jar --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useMonthlyIndicatorFeatures true --mainDir data/ 
+
+mainDir represents the data directory; startMonth, startYear, endMonth, endYear indicate the time interval of the data to be processed
+
+2) Temporal smoothing with RBF kernels (TimeRBF):
+
+	java -Xmx6G -jar dist/trendminer-sptempclustering-importer.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useMonthlyIndicatorFeatures true --mainDir data/
+
+RBF kernels are situated equidistant at the middle of every month. The sigma parameter indicates the RBF width. 
+
+3) To use city indicator features add the parameter:
+
+	--useCityFeatures true
+
+4) To use country indicator features add the parameter:
+
+	--useCountryFeatures true
+
+5) To use spatial smoothing features add the parameters:
+
+	--geokernel true --sigma\_GEO=2
+
+This represents the width of the RBF kernel. RBF kernels are situated with the center in each city in the city list.
 
 
-##### 1) Data tansformation
-===========================
+## 2) Splitting the data into training and test set
 
+This stage splits the data into two disjoint files, one for training and one for testing. Input is the file created at the previous stage and the proportion of training data.
 
-A set of required data files (in trendminer format) are stored in the "sample-data" directory as follows:
+	java -Xmx6G -jar dist/trendminer-sptempclustering-instancecreator.jar --instancesMalletFile data/mallet_file --trainingportion 0.7
 
--*sample-data/dictionary*: contains an index of the vocabulary found in the documents
+## 3) Spatio-temporal clustering
 
--*sample-data/dates*: contains a list of dates capturing the time frame in which the documents were published, indexed from 0 
+The spatio-temporal clustering can be run using the files generated at the previous step as input.
+	
+	java -Xmx6G -jar dist/trendminer-sptempclustering.jar --trainInstanceList data/mallet_train_file --testInstanceList data/mallet_test_file --outputFolder output/ --nrTopics 100 --topWords 10
 
--*sample-data/cities*: contains a list of cities where the documents were published, index from 0
+where mallet\_train\_file and mallet\_test\_file represent paths to the training and test files, output/ is the output folder of the model, nrTopics is the number of topics and topWords (optional) represents the top number of words which describe a topic in the output files.
 
--*sample-data/GEO*: stores the latitude, longitude and country information for each city
+The output folder contains:
++ perplexity.txt: the perplexity on the held-out test data
++ topics.txt: the top topWords words in each topic, one topic/line
++ \_parameters\_: the coeficients (weights) for each tempora/spatial feature, one file/topic
 
--*sample-data/sora_vs*: stores the data according to indexed vocabulary (from "sample-data/dictionary"), the indexed dates (from "/sample-data/dates"), indexed cities (from "/sample-data/cities"), in the format:
+## References
 
- date_id[SPACE]city_id[SPACE]token_id[TAB]frequency
-  
-
-Several settings are available for importing the data for clustering:
-
-a) import the data using monthly indicator features:
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useMonthlyIndicatorFeatures true --mainDir [YOURDATADIR]
-
-b) import the data using temporal smoothing features, sigma=30:
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --mainDir [YOURDATADIR]
-
-c) import the data using temporal smoothing features (sigma=30), and city indicator features:
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCityFeatures true --mainDir [YOURDATADIR]
-
-d) import the data using temporal smoothing features (sigma=30), and country indicator features:
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true --mainDir [YOURDATADIR]
-
-e) import the data using temporal smoothing features (sigma=30), and country indicator features, and regional smooring feature sigma_GEO=2:
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useCountryFeatures true  --geokernel true --sigma_GEO 2 --mainDir [YOURDATADIR]
-
-##### 2) Splitting the data into training and test set
-===========================
-Having the instances created by one of the options described in 1), the next is to split the instances into a training and test datasets:
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --instancesMalletFile [YOURMALLETINSTANCE] --trainingPortion 0.7
-
-##### 3) Spatio-temporal clustering
-===========================
-
-Once the train and test instances have been created as described in 2), the spatio-temporal clustering model can be executed by setting the following parameters:
-
-a) by specifying the path to the train (trainInstanceList) and test (testInstanceList) files, output directory (outputFolder) and setting the number of topics to be learned (nrTopics)
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100
-
-b) by specifying the number of words to be displayed for each topic (topWords) too
-
-java -Xmx6G -jar trendminer-sptempclustering.jar --trainInstanceList [YOURMALLETINSTANCE] --testInstanceList [YOURMALLETINSTANCE] --outputFolder [YOUROUTPUTDIR] --nrTopics 100 --topWords 10
-
-##### Reference:
-===========================
-
-Preotiuc-Pietro, D., Samangooei, S., Varga, A., Gelling, D., Cohn, T., Gibbins, N. and Niranjan, M., 2014. D3.3.1 Tools for Mining Non-stationary Data - Clustering models for discovery of regional and
-demographic variation. Public Deliverable for Trendminer Project
+Daniel Preotiuc-Pietro, Sina Samangooei, Andrea Varga, Douwe Gelling, Trevor Cohn, Mahesan Niranjan
+[Tools for mining non-stationary data - v2. Clustering models for discovery of regional and demographic variation - v2.](http://www.trendminer-project.eu/images/d3.3.1.pdf)
+Public Deliverable for Trendminer Project, 2014.
