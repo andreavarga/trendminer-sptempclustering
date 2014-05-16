@@ -20,16 +20,17 @@ public class CreateTrainTestInstances {
             new CommandOption.String(CreateTrainTestInstances.class,
             "instancesMalletFile", "",
             true,
-            "",
+            "/Users/andreavarga/NetBeansProjects/trendminer-sptempclustering_dist/sample-data/"
+                    + "test_dmr.2012_2013_50.0_TimeShape_2.0_GeoShape_country.dmr.mallet",
             "path to the mallet instances containing the data",
             null);
 
     static CommandOption.Double trainingPortion =
-            new CommandOption.Double(ImportTrendMinerData.class,
+            new CommandOption.Double(CreateTrainTestInstances.class,
             "trainingportion", "",
             false,
             0.7,
-            "training proportion of the original mallet instance file in the range of 0.0 .. 1.0",
+            "the percentage to split the instancesMalletFile into training between the range of 0 .. 1",
             null);
 
 
