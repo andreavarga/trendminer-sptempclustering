@@ -382,18 +382,24 @@ public class ImportTrendMinerData {
             System.out.println("Loaded");
 
             String sDMR_FileSuffix = "";
-            sDMR_FileSuffix = startYear.value + "_" + endYear.value + "_" + sigma.value + "_TimeShape_";
+
+            if (useMonthlyIndicatorFeatures.value){
+                sDMR_FileSuffix = "Mid";
+            }else{
+                sDMR_FileSuffix = "TimeRBF";
+            }
             if (geokernel.value) {
-                sDMR_FileSuffix += sigma_GEO.value + "_GeoShape_";
+                sDMR_FileSuffix += 
+                        ".GeoRBF";
             }
 
             String sSuffix = "";
             if (useCityFeatures.value) {
-                sSuffix += "city.";
+                sSuffix += ".City";
             }
 
             if (useCountryFeatures.value) {
-                sSuffix += "country.";
+                sSuffix += ".Country";
             }
 
             BufferedReader fsora_vs = new BufferedReader(new FileReader(new File(sMainDir + "sora_vs")));
@@ -520,9 +526,17 @@ public class ImportTrendMinerData {
             instancesDMR.addThruPipe(instanceBuffer.iterator());
 
             System.out.println("instances.size():"+ instancesDMR.size());
+            
+            dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            datetimeStart = new Date();
+            calStart = Calendar.getInstance();
+            calStart.setTime(datetimeStart);
+            
             File fDMR_MalletInstances = new File(sMainDir
-                    + "dmr." + sDMR_FileSuffix + sSuffix
-                    + "dmr.mallet");
+                    + "dmr." + new File(sMainDir).getName()+"-"+
+                    sDMR_FileSuffix + sSuffix+"-"+
+                    dateFormat.format(datetimeStart)
+                    + ".mallet");
             
             ObjectOutputStream oos =
                     new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fDMR_MalletInstances)));

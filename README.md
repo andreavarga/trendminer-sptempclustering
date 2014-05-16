@@ -33,7 +33,7 @@ mainDir represents the data directory; startMonth, startYear, endMonth, endYear 
 
 2) Temporal smoothing with RBF kernels (TimeRBF):
 
-	java -Xmx6G -jar dist/trendminer-sptempclustering-importer.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --useMonthlyIndicatorFeatures true --mainDir data/
+	java -Xmx6G -jar dist/trendminer-sptempclustering-importer.jar --sigma 30 --startMonth 06 --endMonth 06 --startYear 2012 --endYear 2013 --mainDir data/
 
 RBF kernels are situated equidistant at the middle of every month. The sigma parameter indicates the RBF width. 
 
@@ -47,7 +47,7 @@ RBF kernels are situated equidistant at the middle of every month. The sigma par
 
 5) To use spatial smoothing features add the parameters:
 
-	--geokernel true --sigma\_GEO=2
+	--geokernel true --sigma_GEO 2
 
 This represents the width of the RBF kernel. RBF kernels are situated with the center in each city in the city list.
 
