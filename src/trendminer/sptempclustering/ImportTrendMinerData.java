@@ -283,7 +283,7 @@ public class ImportTrendMinerData {
 
 
             int iYearDiffValue = endYear.value - startYear.value + 1;
-            for (int k = 0; k < (endYear.value - startYear.value + 1); k++) {
+            for (int k = 0; k < iYearDiffValue; k++) {
                 for (int iMonth = 1; iMonth <= 12; iMonth++) {
                     if (k == 0) {
                         if (iMonth < startMonth.value) {
